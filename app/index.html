@@ -1,1 +1,24 @@
-yoyo webcam
+<!DOCTYPE html>
+<html>
+<head><title>Joppu Cam</title>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js?ver=3.8.1"></script>
+    <script type="text/javascript" charset="utf-8">
+        var camUrl="http://182.59.117.203";
+        $(function(){
+            $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
+            $("#cam0").attr("src", camUrl+":8080/?action=stream");
+            $("#cam1").attr("src", camUrl+":8081/?action=stream");
+
+            $("#cam").click(function(e){var offset=$(this).offset();var x=(e.pageX - offset.left);var y=(e.pageY - offset.top);var qx=Math.ceil(x/213.33);var qy=Math.ceil(y/160);if(qx==1 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=UL,5");}else if(qx==1 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=L,5");}else if(qx==1 && qy==3){$.get(camUrl+"pt/ptctrl.cgi?mv=DL,5");}else if(qx==2 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=U,5");}else if(qx==2 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=H,5");}else if(qx==2 && qy==3){$.get(camUrl+"pt/ptctrl.cgi?mv=D,5");}else if(qx==3 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=UR,5");}else if(qx==3 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=R,5");}else{$.get(camUrl+"pt/ptctrl.cgi?mv=DR,5");}});
+        });
+    </script>
+</head>
+<body>
+<img id="cam" src="" height="480" width="640">
+<br/>
+<img id="cam0" src="" height="480" width="640">
+<br/>
+<img id="cam1" src="" height="480" width="640">
+<p>Page Generated: Sat Mar 22 10:53:25 IST 2014 by 182.59.46.0</p></body>
+</html>
