@@ -24,7 +24,7 @@ public class Main {
 
         URI baseUri = UriBuilder.fromUri("http://localhost/").port(80).build();
 
-        final ResourceConfig resourceConfig = new ResourceConfig(ImageUpload.class);
+        final ResourceConfig resourceConfig = new ResourceConfig(ImageUpload.class, Service.class);
         resourceConfig.registerInstances(new LoggingFilter(LOG, true));
         resourceConfig.register(MultiPartFeature.class);
 

@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
-    @Path("/imageupload")
+@Path("/imageupload")
 public class ImageUpload {
 
     @GET
