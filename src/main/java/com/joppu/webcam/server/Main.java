@@ -28,7 +28,7 @@ public class Main {
         resourceConfig.registerInstances(new LoggingFilter(LOG, true));
         resourceConfig.register(MultiPartFeature.class);
 
-        Server server = JettyHttpContainerFactory.createServer(baseUri, resourceConfig);
+        Server server = JettyHttpContainerFactory.createServer(baseUri, resourceConfig,false);
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);
