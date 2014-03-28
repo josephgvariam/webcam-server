@@ -4,8 +4,14 @@
     <script type="text/javascript"
             src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js?ver=3.8.1"></script>
     <script type="text/javascript" charset="utf-8">
-        var camUrl="http://182.59.117.203";
+        var camUrl="http://";
+
         $(function(){
+
+            $.get( "/homeip", function( ip ) {
+                camUrl = camUrl + ip;
+            });
+
             $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
             $("#cam0").attr("src", camUrl+":8080/?action=stream");
             $("#cam1").attr("src", camUrl+":8081/?action=stream");
