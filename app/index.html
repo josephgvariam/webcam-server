@@ -9,10 +9,11 @@
         $(function(){
 
             $.get( "http://128.199.198.156/api/homeip", function( ip ) {
+                console.log("got homeip: "+ip);
                 camUrl = camUrl + ip;
             });
 
-            console.log("got homeip: "+camUrl);
+
 
             $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
             $("#cam0").attr("src", camUrl+":8080/?action=stream");
