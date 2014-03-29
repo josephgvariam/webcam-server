@@ -5,10 +5,14 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,10 +26,14 @@ public class Main {
 
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContextHandler.setContextPath("/api");
-        ServletHolder h = new ServletHolder(new ServletContainer());
-        h.setInitParameter("javax.ws.rs.Application", "com.joppu.webcam.server.Application");
-        h.setInitOrder(1);
-        servletContextHandler.addServlet(h, "/*");
+
+        ServletHolder servlets = new ServletHolder(new ServletContainer());
+        servlets.setInitParameter("javax.ws.rs.Application", "com.joppu.webcam.server.Application");
+        servlets.setInitOrder(1);
+        servletContextHandler.addServlet(servlets, "/*");
+
+        FilterHolder filters = new FilterHolder(new CrossOriginFilter());
+        servletContextHandler.addFilter(filters, "/*", EnumSet.of(DispatcherType.REQUEST));
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);
