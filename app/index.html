@@ -12,6 +12,8 @@
                 camUrl = camUrl + ip;
             });
 
+            console.log("got homeip: "+camUrl);
+
             $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
             $("#cam0").attr("src", camUrl+":8080/?action=stream");
             $("#cam1").attr("src", camUrl+":8081/?action=stream");
