@@ -36,7 +36,7 @@ public class Main {
         resourceHandler.setResourceBase("app");
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[] { resourceHandler, new DefaultHandler() });
-        server.setHandler(handlers);
+        //server.setHandler(handlers);
 
         LOG.log(Level.INFO, "Starting Webcam Server...");
 

@@ -14,7 +14,7 @@ public class MyApplication extends Application {
         // register resources and features
         classes.add(MultiPartFeature.class);
         classes.add(ImageUpload.class);
-        classes.add(Service.class);
+        //classes.add(Service.class);
         classes.add(LoggingFilter.class);
         return classes;
     }

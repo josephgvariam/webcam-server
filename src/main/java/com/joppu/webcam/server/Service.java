@@ -18,8 +18,9 @@ public class Service {
     }
 
     @GET @Path("/homeip/{ip}")
-    public void setIp(@PathParam("ip") String ip) {
+    public String setIp(@PathParam("ip") String ip) {
         this.ip = ip;
+	return "Yellow";
     }
 
 }
