@@ -4,22 +4,20 @@
     <script type="text/javascript"
             src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js?ver=3.8.1"></script>
     <script type="text/javascript" charset="utf-8">
-        var camUrl="http://";
+
 
         $(function(){
-
-            $.get( "http://128.199.198.156/api/homeip", function( ip ) {
+            $.get( "api/homeip", function( ip ) {
                 console.log("got homeip: "+ip);
-                camUrl = camUrl + ip;
+                var camUrl = 'http://' + ip;
+                console.log("camUrl: "+camUrl);
+
+                $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
+                $("#cam0").attr("src", camUrl+":8080/?action=stream");
+                $("#cam1").attr("src", camUrl+":8081/?action=stream");
+
+                $("#cam").click(function(e){var offset=$(this).offset();var x=(e.pageX - offset.left);var y=(e.pageY - offset.top);var qx=Math.ceil(x/213.33);var qy=Math.ceil(y/160);if(qx==1 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=UL,5");}else if(qx==1 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=L,5");}else if(qx==1 && qy==3){$.get(camUrl+"pt/ptctrl.cgi?mv=DL,5");}else if(qx==2 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=U,5");}else if(qx==2 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=H,5");}else if(qx==2 && qy==3){$.get(camUrl+"pt/ptctrl.cgi?mv=D,5");}else if(qx==3 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=UR,5");}else if(qx==3 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=R,5");}else{$.get(camUrl+"pt/ptctrl.cgi?mv=DR,5");}});
             });
-
-
-
-            $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
-            $("#cam0").attr("src", camUrl+":8080/?action=stream");
-            $("#cam1").attr("src", camUrl+":8081/?action=stream");
-
-            $("#cam").click(function(e){var offset=$(this).offset();var x=(e.pageX - offset.left);var y=(e.pageY - offset.top);var qx=Math.ceil(x/213.33);var qy=Math.ceil(y/160);if(qx==1 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=UL,5");}else if(qx==1 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=L,5");}else if(qx==1 && qy==3){$.get(camUrl+"pt/ptctrl.cgi?mv=DL,5");}else if(qx==2 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=U,5");}else if(qx==2 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=H,5");}else if(qx==2 && qy==3){$.get(camUrl+"pt/ptctrl.cgi?mv=D,5");}else if(qx==3 && qy==1){$.get(camUrl+"pt/ptctrl.cgi?mv=UR,5");}else if(qx==3 && qy==2){$.get(camUrl+"pt/ptctrl.cgi?mv=R,5");}else{$.get(camUrl+"pt/ptctrl.cgi?mv=DR,5");}});
         });
     </script>
 </head>
