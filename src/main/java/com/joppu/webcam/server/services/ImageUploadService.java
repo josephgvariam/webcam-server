@@ -1,18 +1,15 @@
-package com.joppu.webcam.server;
+package com.joppu.webcam.server.services;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.*;
+
 @Path("/imageupload")
-public class ImageUpload {
+public class ImageUploadService {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)

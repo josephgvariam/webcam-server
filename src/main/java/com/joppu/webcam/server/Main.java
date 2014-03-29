@@ -5,14 +5,10 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.glassfish.jersey.filter.LoggingFilter;
-import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.servlet.ServletContainer;
 
-import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,23 +16,25 @@ public class Main {
 
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
-        URI baseUri = UriBuilder.fromUri("http://localhost/").port(80).build();
+        Server server = new Server(8080);
 
-        final ResourceConfig resourceConfig = new ResourceConfig(ImageUpload.class, Service.class);
-        resourceConfig.registerInstances(new LoggingFilter(LOG, true));
-        resourceConfig.register(MultiPartFeature.class);
-
-        Server server = JettyHttpContainerFactory.createServer(baseUri, resourceConfig,false);
+        ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        servletContextHandler.setContextPath("/api");
+        ServletHolder h = new ServletHolder(new ServletContainer());
+        h.setInitParameter("javax.ws.rs.Application", "com.joppu.webcam.server.Application");
+        h.setInitOrder(1);
+        servletContextHandler.addServlet(h, "/*");
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);
         resourceHandler.setWelcomeFiles(new String[]{"index.html"});
         resourceHandler.setResourceBase("app");
+
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[] { resourceHandler, new DefaultHandler() });
-        //server.setHandler(handlers);
+        handlers.setHandlers(new Handler[]{servletContextHandler, resourceHandler, new DefaultHandler()});
+        server.setHandler(handlers);
 
         LOG.log(Level.INFO, "Starting Webcam Server...");
 
