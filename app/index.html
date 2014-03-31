@@ -1,32 +1,164 @@
 <!DOCTYPE html>
-<html>
-<head><title>Joppu Cam</title>
-    <script type="text/javascript"
-            src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js?ver=3.8.1"></script>
-    <script type="text/javascript" charset="utf-8">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="pics/favicon.ico">
 
+    <title>Joppu Cam</title>`
 
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Joppu Cam</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item</a></li>
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+            <li><a href="">More navigation</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+
+          <div class="row placeholders">
+            <div id="placeholder0" class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Camera 0</h4>
+              <span class="text-muted">Live feed</span>
+            </div>
+            <div id="placeholder1" class="col-xs-6 col-sm-3 placeholder">                
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Camera 1</h4>
+              <span class="text-muted">Live feed</span>
+            </div>
+            <div id="placeholder2" class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Camera2</h4>
+              <span class="text-muted">Live feed</span>
+            </div>
+            <div id="placeholder3" class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Motion Capture</h4>
+              <span class="text-muted">Snapshots</span>
+            </div>
+          </div>
+
+          <h2 class="sub-header">Camera Live Feed</h2>
+          <img id="cam" src="" height="480" width="640">
+          <!--br/><img id="cam0" src="" height="480" width="640">
+          <br/><img id="cam1" src="" height="480" width="640"-->
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/docs.min.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
         $(function(){
+            var camUrl = '';
+
             $.get( "api/homeip", function( ip ) {
                 console.log("got homeip: "+ip);
-                var camUrl = 'http://' + ip;
-                console.log("camUrl: "+camUrl);
+                camUrl = 'http://' + ip;                                                
+            });
 
-                $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
-                $("#cam0").attr("src", camUrl+":8080/?action=stream");
-                $("#cam1").attr("src", camUrl+":8081/?action=stream");
 
-                camUrl = camUrl + ":8001";
-                $("#cam").click(function(e){var offset=$(this).offset();var x=(e.pageX - offset.left);var y=(e.pageY - offset.top);var qx=Math.ceil(x/213.33);var qy=Math.ceil(y/160);if(qx==1 && qy==1){$.get(camUrl+"/pt/ptctrl.cgi?mv=UL,5");}else if(qx==1 && qy==2){$.get(camUrl+"/pt/ptctrl.cgi?mv=L,5");}else if(qx==1 && qy==3){$.get(camUrl+"/pt/ptctrl.cgi?mv=DL,5");}else if(qx==2 && qy==1){$.get(camUrl+"/pt/ptctrl.cgi?mv=U,5");}else if(qx==2 && qy==2){$.get(camUrl+"/pt/ptctrl.cgi?mv=H,5");}else if(qx==2 && qy==3){$.get(camUrl+"/pt/ptctrl.cgi?mv=D,5");}else if(qx==3 && qy==1){$.get(camUrl+"/pt/ptctrl.cgi?mv=UR,5");}else if(qx==3 && qy==2){$.get(camUrl+"/pt/ptctrl.cgi?mv=R,5");}else{$.get(camUrl+"/pt/ptctrl.cgi?mv=DR,5");}});
+            $(".placeholder").click(function(e) {                
+                var targetId =  this.id;
+                console.log('click: '+targetId);
+
+
+                if(targetId == 'placeholder0'){
+                    console.log("imgsrc: "+camUrl+":8001/img/video.mjpeg");
+                    $("#cam").attr("src", camUrl+":8001/img/video.mjpeg");
+                    var camUrl0 = camUrl + ":8001";
+                    $("#cam").click(function(e){var offset=$(this).offset();var x=(e.pageX - offset.left);var y=(e.pageY - offset.top);var qx=Math.ceil(x/213.33);var qy=Math.ceil(y/160);if(qx==1 && qy==1){$.get(camUrl0+"/pt/ptctrl.cgi?mv=UL,5");}else if(qx==1 && qy==2){$.get(camUrl0+"/pt/ptctrl.cgi?mv=L,5");}else if(qx==1 && qy==3){$.get(camUrl0+"/pt/ptctrl.cgi?mv=DL,5");}else if(qx==2 && qy==1){$.get(camUrl0+"/pt/ptctrl.cgi?mv=U,5");}else if(qx==2 && qy==2){$.get(camUrl0+"/pt/ptctrl.cgi?mv=H,5");}else if(qx==2 && qy==3){$.get(camUrl0+"/pt/ptctrl.cgi?mv=D,5");}else if(qx==3 && qy==1){$.get(camUrl0+"/pt/ptctrl.cgi?mv=UR,5");}else if(qx==3 && qy==2){$.get(camUrl0+"/pt/ptctrl.cgi?mv=R,5");}else{$.get(camUrl0+"/pt/ptctrl.cgi?mv=DR,5");}});
+                }
+                else if(targetId == 'placeholder1'){
+                    console.log("imgsrc: "+camUrl+":8080/?action=stream");
+                    $("#cam").attr("src", camUrl+":8080/?action=stream");
+                    $("#cam").click(function(e){
+                        console.log("unbind1");
+                    });
+                }
+                else if(targetId == 'placeholder2'){
+                    console.log("imgsrc: "+camUrl+":8081/?action=stream");
+                    $("#cam").attr("src", camUrl+":8081/?action=stream");
+                    $("#cam").click(function(e){
+                        console.log("unbind2");
+                    });
+                }
+                else if(targetId == 'placeholder3'){
+                    $("#cam").click(function(e){
+                        console.log("unbind3");
+                    });
+                }
+                
+                
+                
             });
         });
     </script>
-</head>
-<body>
-<img id="cam" src="" height="480" width="640">
-<br/>
-<img id="cam0" src="" height="480" width="640">
-<br/>
-<img id="cam1" src="" height="480" width="640">
-<p>Page Generated: Sat Mar 22 10:53:25 IST 2014 by 182.59.46.0</p></body>
+  </body>
 </html>
